@@ -1,0 +1,66 @@
+[probe]
+pin: PA1 #PC2
+x_offset: 0
+y_offset: 0
+z_offset: 0.0
+samples_tolerance: 0.025
+samples_tolerance_retries: 15
+speed: 1.5
+lift_speed: 50
+samples: 2
+samples_result: average
+activate_gcode:
+      SET_PIN PIN=Z_wakeup VALUE=1
+deactivate_gcode:
+      SET_PIN PIN=Z_wakeup VALUE=0
+
+
+[output_pin Z_wakeup]
+pin: PC14
+pwm: False
+value: 0
+
+
+[homing_override]
+
+axes: z
+set_position_z: 0
+gcode:
+      M104 S140
+          G0 Z 5 F500
+      SENSORLESS_HOME_X
+    #G28 X0 Y0
+    #G28 Y0
+      SENSORLESS_HOME_Y
+      
+      G0 X80 Y50 F20000
+      SENSORLESS_HOME_Z
+      Probe
+      SET_KINEMATIC_POSITION Z=0
+      G1 z5
+
+
+[force_move]
+enable_force_move: True
+
+
+
+[gcode_macro CLEAN_NOZZLE_PROBE]
+gcode:
+    M117 Cleaning Nozzle...
+    M104 S175                     ; Start heating to 175°C
+    G90                           ; Absolute positioning
+    G1 Z10 F1000                  ; Raise Z to avoid bed
+    G1 X3 Y4 F3000                ; Move to first probe point
+    PROBE                         ; Probe Z at X3 Y4
+    G1 z2                         ; Probe Z2
+    G1 X26 Y4 F3000               ; Move to second probe point
+    PROBE                         ; Probe Z at X26 Y4
+    M109 S220                     ; Wait for nozzle to heat to 220°C
+    G1 X3 Y4 F200                 ; Start position for wipe
+    G1 E-5 F300
+    M106 S255                     ; Set part cooling fan to 100%
+    M109 S140                     ; Cool nozzle to 140°C (wait)
+    G1 Z10 F600                   ; Lift Z 10 after wiping
+    M107                          ; Turn fan off
+    M117 Nozzle Ready
