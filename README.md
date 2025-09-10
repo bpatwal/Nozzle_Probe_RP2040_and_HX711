@@ -26,6 +26,6 @@ Designed for custom 3D printers that need a reliable and low-cost probing method
 ---------------------------------RP2040 micropython setup----------------------------------
 
 https://www.waveshare.com/wiki/RP2040-Zero#Flash_Firmware
-Firmware file is in the repo.
+Firmware file is in the repo Nozzle_Probe_RP2040_and_HX711.
 How to download the firmware library for RP2040/RP2350 in windows:- 
 After connecting to the computer, press the BOOT key and the RESET key at the same time, release the RESET key first and then release the BOOT key, a removable disk will appear on the computer, copy the firmware library into it 
