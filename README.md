@@ -21,7 +21,7 @@ Designed for custom 3D printers that need a reliable and low-cost probing method
 
 📹 Demo/Setup Video
 
-👉 (Insert YouTube link here)
+👉 (https://youtu.be/j80XuTRs36o)
 
 ---------------------------------RP2040 micropython setup----------------------------------
 
